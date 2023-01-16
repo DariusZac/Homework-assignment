@@ -25,7 +25,7 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public ReviewDto addReview(Long movieId, ReviewDto dto) {
-        Movie addToMovie = movieRepository.findById(movieId).orElseThrow(() -> new IdNotFound("No review with id: "+ movieId));
+        Movie addToMovie = movieRepository.findById(movieId).orElseThrow(() -> new IdNotFound("No movie with id: "+ movieId));
         dto.setId(0L);
         Review review = mapper.dtoToEntity(dto);
         review.setMovieId(addToMovie);

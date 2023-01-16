@@ -37,6 +37,7 @@ public class ActorServiceImpl implements ActorService {
     @Override
     public ActorDto addActor(ActorDto dto) {
         Actor addActor = mapper.dtoToEntity(dto);
+        addActor.setId(0L);
         log.info("saving {}", addActor);
         return mapper.entityToDto(repository.save(addActor));
     }

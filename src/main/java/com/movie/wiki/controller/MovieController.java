@@ -1,7 +1,5 @@
 package com.movie.wiki.controller;
 
-import com.movie.wiki.business.repository.MovieRepository;
-import com.movie.wiki.business.repository.model.Movie;
 import com.movie.wiki.business.service.MovieService;
 import com.movie.wiki.model.ActorNMovie;
 import com.movie.wiki.model.MovieDto;
@@ -52,7 +50,7 @@ public class MovieController {
     }
 
     @GetMapping("/{movieId}/actors")
-    public ResponseEntity<List<ActorNMovie>> getMovieActors(@PathVariable Long movieId){
+    public ResponseEntity<ActorNMovie> getMovieActors(@PathVariable Long movieId){
         return ResponseEntity.ok(service.getMovieActors(movieId));
     }
 

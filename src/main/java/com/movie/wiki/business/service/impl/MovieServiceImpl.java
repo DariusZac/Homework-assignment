@@ -73,8 +73,9 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public List<ActorNMovie> getMovieActors(Long movieId) {
-        return repository.findById(movieId).stream().map(mapper::EntityToActorNMovieDto).collect(Collectors.toList());
+    public ActorNMovie getMovieActors(Long movieId) {
+        Movie movie = repository.findById(movieId).orElseThrow(()->new IdNotFound("No movie with id: "+movieId));
+        return mapper.EntityToActorNMovieDto(movie);
     }
 
     @Override

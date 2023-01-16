@@ -30,7 +30,7 @@ public class MovieDetailServiceImpl implements MovieDetailService {
     @Override
     public MovieDetailDto addDetails(MovieDetailDto dto) {
         Movie entityMovie = movieRepository.findById(dto.getId()).orElseThrow(
-                ()-> new IdNotFound("No details with id: "+dto.getId()));
+                ()-> new IdNotFound("No movie with id: "+dto.getId()));
         MovieDetail entityDetails = mapper.dtoToEntity(dto);
         entityDetails.setMovieId(entityMovie);
         log.info("saving details {}", entityDetails);

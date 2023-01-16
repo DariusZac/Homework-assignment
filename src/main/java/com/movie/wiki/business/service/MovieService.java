@@ -12,6 +12,6 @@ public interface MovieService {
     MovieDto updateMovie(MovieDto dto);
     void deleteMovie(Long id);
     boolean addActor(Long movieId, Long actorId);
-    List<ActorNMovie> getMovieActors(Long movieId);
+    ActorNMovie getMovieActors(Long movieId);
     List<TopMovies> getTopRatedMovies();
 }

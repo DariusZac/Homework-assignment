@@ -1,5 +1,6 @@
 package com.movie.wiki.business.repository.model;
 
+import com.movie.wiki.business.repository.MovieScore;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -16,7 +17,7 @@ import java.time.LocalDateTime;
 @Entity
 @Data
 @Table(name = "review")
-public class Review {
+public class Review implements MovieScore {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
