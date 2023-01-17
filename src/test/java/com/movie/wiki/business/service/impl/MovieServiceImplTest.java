@@ -11,7 +11,6 @@ import com.movie.wiki.exception.IdNotFound;
 import com.movie.wiki.model.ActorNMovie;
 import com.movie.wiki.model.MovieDto;
 import com.movie.wiki.model.TopMovies;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -46,10 +45,6 @@ class MovieServiceImplTest {
     private Movie movie;
     @InjectMocks
     private MovieServiceImpl service;
-
-    @BeforeEach
-    void setUp() {
-    }
 
     @Test
     void getAllMovies() {

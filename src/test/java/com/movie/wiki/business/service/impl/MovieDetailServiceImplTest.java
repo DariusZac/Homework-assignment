@@ -8,7 +8,6 @@ import com.movie.wiki.business.repository.model.MovieDetail;
 import com.movie.wiki.exception.IdNotFound;
 import com.movie.wiki.model.MovieDetailDto;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -35,9 +34,6 @@ class MovieDetailServiceImplTest {
     @InjectMocks
     private MovieDetailServiceImpl service;
 
-    @BeforeEach
-    void setUp() {
-    }
 
     @Test
     void getDetails_Positive() {

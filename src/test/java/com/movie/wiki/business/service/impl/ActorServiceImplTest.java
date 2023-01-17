@@ -5,7 +5,6 @@ import com.movie.wiki.business.repository.ActorRepository;
 import com.movie.wiki.business.repository.model.Actor;
 import com.movie.wiki.exception.IdNotFound;
 import com.movie.wiki.model.ActorDto;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
