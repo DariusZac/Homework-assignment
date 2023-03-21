@@ -20,8 +20,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.anyLong;
-import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
 @WebMvcTest(ActorController.class)
@@ -39,7 +37,7 @@ class ActorControllerTest {
 
     @BeforeEach
     void setUp() throws JsonProcessingException {
-        actorDto.setId(1l);
+        actorDto.setId(1L);
         actorDto.setFullName("Greg");
         actorDto.setNationality("test");
         actorDto.setDate(LocalDate.parse("1980-09-09"));
@@ -60,15 +58,14 @@ class ActorControllerTest {
     void addActor() throws Exception {
         when(service.addActor(any(ActorDto.class))).thenReturn(actorDto);
         mockMvc.perform(MockMvcRequestBuilders.post(URL)
-                .content(stringObject).contentType(MediaType.APPLICATION_JSON))
+                        .content(stringObject).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.content().json(stringObject))
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
     @Test
     void deleteActor() throws Exception {
-        doNothing().when(service).deleteActor(anyLong());
-        mockMvc.perform(MockMvcRequestBuilders.delete(URL +"/1"))
+        mockMvc.perform(MockMvcRequestBuilders.delete(URL + "/1"))
                 .andExpect(MockMvcResultMatchers.status().isNoContent());
     }
 }

@@ -22,7 +22,6 @@ import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
@@ -59,7 +58,7 @@ class ReviewServiceImplTest {
     @Test
     void addReview_BadMovieIdGiven() {
         when(movieRepository.findById(anyLong())).thenReturn(Optional.empty());
-        Throwable error = catchThrowable(()-> service.addReview(1L, new ReviewDto()));
+        Throwable error = catchThrowable(() -> service.addReview(1L, new ReviewDto()));
         assertThat(error)
                 .isInstanceOf(IdNotFound.class)
                 .hasMessage("No movie with id: 1");
@@ -87,7 +86,6 @@ class ReviewServiceImplTest {
     @Test
     void deleteReview_Successful() {
         when(repository.existsById(anyLong())).thenReturn(true);
-        doNothing().when(repository).deleteById(anyLong());
         service.deleteReview(0L);
         verify(repository).existsById(anyLong());
         verify(repository).deleteById(anyLong());

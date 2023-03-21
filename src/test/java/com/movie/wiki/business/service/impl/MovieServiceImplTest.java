@@ -23,9 +23,10 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.anyLong;
-import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
@@ -90,7 +91,6 @@ class MovieServiceImplTest {
     @Test
     void deleteMovie_Success() {
         when(repository.existsById(anyLong())).thenReturn(true);
-        doNothing().when(repository).deleteById(anyLong());
         service.deleteMovie(0L);
         verify(repository).existsById(anyLong());
         verify(repository).deleteById(anyLong());
@@ -109,14 +109,14 @@ class MovieServiceImplTest {
     @Test
     void addActor_BadMovieIdGiven() {
         when(repository.existsById(anyLong())).thenReturn(false);
-        assertEquals(false, service.addActor(0L, 0L));
+        assertFalse(service.addActor(0L, 0L));
     }
 
     @Test
     void addActor_BadActorIdGiven() {
         when(repository.existsById(anyLong())).thenReturn(true);
         when(actorRepository.existsById(anyLong())).thenReturn(false);
-        assertEquals(false, service.addActor(0L, 0L));
+        assertFalse(service.addActor(0L, 0L));
     }
 
     @Test
@@ -125,10 +125,9 @@ class MovieServiceImplTest {
         when(repository.existsById(anyLong())).thenReturn(true);
         when(actorRepository.existsById(anyLong())).thenReturn(true);
         when(repository.findById(anyLong())).thenReturn(Optional.of(movie));
-        doNothing().when(movie).addActor(any(Actor.class));
         when(actorRepository.findById(anyLong())).thenReturn(Optional.of(actor));
         when(repository.save(any(Movie.class))).thenReturn(movie);
-        assertEquals(true, service.addActor(0L, 0L));
+        assertTrue(service.addActor(0L, 0L));
     }
 
     @Test
@@ -158,13 +157,13 @@ class MovieServiceImplTest {
         secondMovieReview.setScore(7);
         Review secondMovieReview2 = new Review();
         secondMovieReview2.setScore(9);
-        Movie movie1 = new Movie(1l, "Terminator", null, null, null);
-        Movie movie2 = new Movie(2l, "Avatar", null, null, null);
+        Movie movie1 = new Movie(1L, "Terminator", null, null, null);
+        Movie movie2 = new Movie(2L, "Avatar", null, null, null);
         when(repository.findAll()).thenReturn(List.of(movie1, movie2));
-        when(reviewRepository.findAllByMovieId_id(1l)).thenReturn(List.of(review, review2));
-        when(reviewRepository.findAllByMovieId_id(2l)).thenReturn(List.of(secondMovieReview, secondMovieReview2));
-        TopMovies topMovies = new TopMovies(1l, "Terminator", 6, 2);
-        TopMovies topMovies1 = new TopMovies(2l, "Avatar", 8, 2);
+        when(reviewRepository.findAllByMovieId_id(1L)).thenReturn(List.of(review, review2));
+        when(reviewRepository.findAllByMovieId_id(2L)).thenReturn(List.of(secondMovieReview, secondMovieReview2));
+        TopMovies topMovies = new TopMovies(1L, "Terminator", 6, 2);
+        TopMovies topMovies1 = new TopMovies(2L, "Avatar", 8, 2);
         List<TopMovies> topMovie = List.of(topMovies1, topMovies);
         assertEquals(topMovie, service.getTopRatedMovies());
     }

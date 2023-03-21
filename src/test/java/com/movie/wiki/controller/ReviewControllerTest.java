@@ -21,7 +21,6 @@ import java.util.List;
 
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.anyLong;
-import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
 @WebMvcTest(ReviewController.class)
@@ -40,7 +39,7 @@ class ReviewControllerTest {
     @BeforeEach
     void setUp() throws JsonProcessingException {
         reviewDto.setReviewer("Greg");
-        reviewDto.setId(1l);
+        reviewDto.setId(1L);
         reviewDto.setScore(10);
         reviewDto.setReview("meh");
         reviewDto.setDate(LocalDate.parse("2022-02-02"));
@@ -50,25 +49,24 @@ class ReviewControllerTest {
     }
 
     @Test
-    void getAllReviewsFromMovie() throws Exception{
+    void getAllReviewsFromMovie() throws Exception {
         when(service.getReviewsFromMovie(anyLong())).thenReturn(List.of(reviewDto));
-        mockMvc.perform(MockMvcRequestBuilders.get(URL+"/1"))
+        mockMvc.perform(MockMvcRequestBuilders.get(URL + "/1"))
                 .andExpect(MockMvcResultMatchers.content().json(objectMapper.writeValueAsString(List.of(reviewDto))))
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
     @Test
     void deleteReview() throws Exception {
-        doNothing().when(service).deleteReview(anyLong());
-        mockMvc.perform(MockMvcRequestBuilders.delete(URL+"/1"))
+        mockMvc.perform(MockMvcRequestBuilders.delete(URL + "/1"))
                 .andExpect(MockMvcResultMatchers.status().isNoContent());
     }
 
     @Test
     void addReview() throws Exception {
         when(service.addReview(anyLong(), any(ReviewDto.class))).thenReturn(reviewDto);
-        mockMvc.perform(MockMvcRequestBuilders.post(URL+"/1")
-                .content(stringObject).contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(MockMvcRequestBuilders.post(URL + "/1")
+                        .content(stringObject).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json(stringObject));
     }

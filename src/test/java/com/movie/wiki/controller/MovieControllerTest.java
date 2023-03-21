@@ -19,7 +19,6 @@ import java.util.List;
 
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.anyLong;
-import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
 @WebMvcTest(MovieController.class)
@@ -38,7 +37,7 @@ class MovieControllerTest {
     void setUp() {
         movieDto.setId(1L);
         movieDto.setName("Title");
-        actorNMovie.setId(1l);
+        actorNMovie.setId(1L);
         actorNMovie.setName("Title");
     }
 
@@ -46,7 +45,7 @@ class MovieControllerTest {
     void getAllMovies() throws Exception {
         when(service.getAllMovies()).thenReturn(List.of(movieDto));
         mockMvc.perform(MockMvcRequestBuilders
-                .get("/"))
+                        .get("/"))
                 .andExpect(MockMvcResultMatchers.content().json(new ObjectMapper().writeValueAsString(List.of(movieDto))))
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
@@ -55,14 +54,14 @@ class MovieControllerTest {
     void addMovie() throws Exception {
         when(service.addMovie(any(MovieDto.class))).thenReturn(movieDto);
         mockMvc.perform(MockMvcRequestBuilders.post("/")
-                .content(new ObjectMapper().writeValueAsString(movieDto))
-                .contentType(MediaType.APPLICATION_JSON))
+                        .content(new ObjectMapper().writeValueAsString(movieDto))
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json(new ObjectMapper().writeValueAsString(movieDto)));
     }
 
     @Test
-    void updateMovie() throws Exception{
+    void updateMovie() throws Exception {
         when(service.updateMovie(any(MovieDto.class))).thenReturn(movieDto);
         mockMvc.perform(MockMvcRequestBuilders.patch("/")
                         .content(new ObjectMapper().writeValueAsString(movieDto))
@@ -73,7 +72,6 @@ class MovieControllerTest {
 
     @Test
     void deleteMovie() throws Exception {
-        doNothing().when(service).deleteMovie(anyLong());
         mockMvc.perform(MockMvcRequestBuilders.delete("/1"))
                 .andExpect(MockMvcResultMatchers.status().isNoContent());
     }
@@ -82,9 +80,9 @@ class MovieControllerTest {
     void addActor_failure() throws Exception {
         when(service.addActor(anyLong(), anyLong())).thenReturn(false);
         mockMvc.perform(MockMvcRequestBuilders
-                .post("/actor")
-                .param("movieId", "1")
-                .param("actorId", "1"))
+                        .post("/actor")
+                        .param("movieId", "1")
+                        .param("actorId", "1"))
                 .andExpect(MockMvcResultMatchers.status().isNotFound());
     }
 
@@ -102,7 +100,7 @@ class MovieControllerTest {
     void getMovieActors() throws Exception {
         when(service.getMovieActors(anyLong())).thenReturn(actorNMovie);
         mockMvc.perform(MockMvcRequestBuilders
-                .get("/1/actors"))
+                        .get("/1/actors"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json(new ObjectMapper().writeValueAsString(actorNMovie)));
     }

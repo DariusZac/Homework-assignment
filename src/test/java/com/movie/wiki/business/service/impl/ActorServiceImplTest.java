@@ -18,7 +18,6 @@ import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.anyLong;
-import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
@@ -47,7 +46,6 @@ class ActorServiceImplTest {
     @Test
     void deleteActor_Positive() {
         when(repository.existsById(anyLong())).thenReturn(true);
-        doNothing().when(repository).deleteById(anyLong());
         service.deleteActor(0L);
         verify(repository).existsById(anyLong());
         verify(repository).deleteById(anyLong());
@@ -55,7 +53,7 @@ class ActorServiceImplTest {
     }
 
     @Test
-    void deleteActor_BadIdGiven(){
+    void deleteActor_BadIdGiven() {
         when(repository.existsById(anyLong())).thenReturn(false);
         Throwable error = catchThrowable(() -> service.deleteActor(0L));
         assertThat(error)

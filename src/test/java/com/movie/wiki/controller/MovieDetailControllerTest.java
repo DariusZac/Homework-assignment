@@ -34,9 +34,10 @@ class MovieDetailControllerTest {
     private MovieDetailDto movieDetail = new MovieDetailDto();
     private ObjectMapper objectMapper = new ObjectMapper();
     private String stringObject;
+
     @BeforeEach
     void setUp() throws JsonProcessingException {
-        movieDetail.setId(1l);
+        movieDetail.setId(1L);
         movieDetail.setDate(LocalDate.parse("1994-01-01"));
         movieDetail.setDescription("description");
         objectMapper.registerModule(new JavaTimeModule());
@@ -44,21 +45,21 @@ class MovieDetailControllerTest {
         stringObject = objectMapper.writeValueAsString(movieDetail);
     }
 
-        @Test
+    @Test
     void getDetails() throws Exception {
         when(service.getDetails(anyLong())).thenReturn(movieDetail);
         mockMvc.perform(MockMvcRequestBuilders
-                .get(URL + "/0"))
+                        .get(URL + "/0"))
                 .andExpect(MockMvcResultMatchers
-                        .content().json(stringObject)
-                ).andExpect(MockMvcResultMatchers.status().isOk());
+                        .content().json(stringObject))
+                .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
     @Test
     void addDetails() throws Exception {
         when(service.addDetails(any(MovieDetailDto.class))).thenReturn(movieDetail);
         mockMvc.perform(MockMvcRequestBuilders
-                .post(URL).content(stringObject)
+                        .post(URL).content(stringObject)
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(MockMvcResultMatchers
                         .content().json(stringObject))
