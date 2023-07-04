@@ -23,23 +23,23 @@ public class ReviewController {
     private final ReviewService service;
 
     @GetMapping("/{id}")
-    public ResponseEntity<List<ReviewDto>> getAllReviewsFromMovie(@PathVariable Long id){
+    public ResponseEntity<List<ReviewDto>> getAllReviewsFromMovie(@PathVariable Long id) {
         return ResponseEntity.ok(service.getReviewsFromMovie(id));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity deleteReview(@PathVariable("id") long id){
+    public ResponseEntity deleteReview(@PathVariable("id") long id) {
         service.deleteReview(id);
         return ResponseEntity.noContent().build();
     }
 
     @PostMapping("/{movieId}")
-    public ResponseEntity addReview(@PathVariable Long movieId, @Validated @RequestBody ReviewDto dto){
+    public ResponseEntity<ReviewDto> addReview(@PathVariable Long movieId, @Validated @RequestBody ReviewDto dto) {
         return ResponseEntity.ok(service.addReview(movieId, dto));
     }
 
     @PatchMapping
-    public ResponseEntity updateReview(@Validated @RequestBody ReviewDto dto){
+    public ResponseEntity<ReviewDto> updateReview(@Validated @RequestBody ReviewDto dto) {
         return ResponseEntity.ok(service.updateReview(dto));
     }
 }

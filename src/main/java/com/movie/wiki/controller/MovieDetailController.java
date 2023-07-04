@@ -5,7 +5,6 @@ import com.movie.wiki.model.MovieDetailDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,12 +19,12 @@ public class MovieDetailController {
     private final MovieDetailService service;
 
     @GetMapping("/{id}")
-    public ResponseEntity<MovieDetailDto> getDetails(@PathVariable Long id){
+    public ResponseEntity<MovieDetailDto> getDetails(@PathVariable Long id) {
         return ResponseEntity.ok(service.getDetails(id));
     }
 
     @PostMapping
-    public ResponseEntity addDetails(@Validated @RequestBody MovieDetailDto dto){
+    public ResponseEntity addDetails(@Validated @RequestBody MovieDetailDto dto) {
         return ResponseEntity.ok(service.addDetails(dto));
     }
 

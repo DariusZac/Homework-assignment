@@ -40,14 +40,14 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public MovieDto addMovie(MovieDto dto) {
         dto.setId(0L);
-        log.info("saving dto :", dto);
+        log.info("saving dto :{}", dto);
         return mapper.movieToDto(repository.save(mapper.dtoToMovie(dto)));
     }
 
     @Override
     public MovieDto updateMovie(MovieDto dto) {
-        if (!repository.existsById(dto.getId())){
-            throw new IdNotFound("No movie with id: "+dto.getId());
+        if (!repository.existsById(dto.getId())) {
+            throw new IdNotFound("No movie with id: " + dto.getId());
         }
         log.info("Updating entity with id: {}", dto.getId());
         return mapper.movieToDto(repository.save(mapper.dtoToMovie(dto)));
@@ -55,8 +55,8 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public void deleteMovie(Long id) {
-        if (!repository.existsById(id)){
-            throw new IdNotFound("No movie with id: "+id);
+        if (!repository.existsById(id)) {
+            throw new IdNotFound("No movie with id: " + id);
         }
         repository.deleteById(id);
         log.info("Movie with id {} is deleted", id);
@@ -74,7 +74,7 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public ActorNMovie getMovieActors(Long movieId) {
-        Movie movie = repository.findById(movieId).orElseThrow(()->new IdNotFound("No movie with id: "+movieId));
+        Movie movie = repository.findById(movieId).orElseThrow(() -> new IdNotFound("No movie with id: " + movieId));
         return mapper.EntityToActorNMovieDto(movie);
     }
 
@@ -82,10 +82,10 @@ public class MovieServiceImpl implements MovieService {
     public List<TopMovies> getTopRatedMovies() {
         List<TopMovies> topMovies = new ArrayList<>();
         List<Movie> movies = repository.findAll();
-        for (Movie movie : movies){
+        for (Movie movie : movies) {
             List<MovieScore> review = reviewRepository.findAllByMovieId_id(movie.getId());
             float averageScore = 0;
-            for (MovieScore score: review){
+            for (MovieScore score : review) {
                 averageScore += score.getScore();
             }
             if (review.size() != 0) {
