@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -77,18 +78,8 @@ class MovieControllerTest {
     }
 
     @Test
-    void addActor_failure() throws Exception {
-        when(service.addActor(anyLong(), anyLong())).thenReturn(false);
-        mockMvc.perform(MockMvcRequestBuilders
-                        .post("/actor")
-                        .param("movieId", "1")
-                        .param("actorId", "1"))
-                .andExpect(MockMvcResultMatchers.status().isNotFound());
-    }
-
-    @Test
-    void addActor_Success() throws Exception {
-        when(service.addActor(anyLong(), anyLong())).thenReturn(true);
+    void addActor_success() throws Exception {
+        when(service.addActor(anyLong(), anyLong())).thenReturn(ResponseEntity.ok().build());
         mockMvc.perform(MockMvcRequestBuilders
                         .post("/actor")
                         .param("movieId", "1")

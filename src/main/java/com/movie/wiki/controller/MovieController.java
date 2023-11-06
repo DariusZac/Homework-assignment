@@ -3,6 +3,7 @@ package com.movie.wiki.controller;
 import com.movie.wiki.business.service.MovieService;
 import com.movie.wiki.model.ActorNMovie;
 import com.movie.wiki.model.MovieDto;
+import com.movie.wiki.model.TopMovies;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -33,21 +34,19 @@ public class MovieController {
     }
 
     @PatchMapping
-    public ResponseEntity updateMovie(@Validated @RequestBody MovieDto dto) {
+    public ResponseEntity<MovieDto> updateMovie(@Validated @RequestBody MovieDto dto) {
         return ResponseEntity.ok(service.updateMovie(dto));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity deleteMovie(@PathVariable("id") long id) {
+    public ResponseEntity<Object> deleteMovie(@PathVariable("id") long id) {
         service.deleteMovie(id);
         return ResponseEntity.noContent().build();
     }
 
     @PostMapping("/actor")
-    public ResponseEntity addActor(@RequestParam Long movieId, @RequestParam Long actorId) {
-        if (!service.addActor(movieId, actorId))
-            return ResponseEntity.notFound().build();
-        return ResponseEntity.ok().build();
+    public ResponseEntity<Object> addActor(@RequestParam Long movieId, @RequestParam Long actorId) {
+        return service.addActor(movieId, actorId);
     }
 
     @GetMapping("/{movieId}/actors")
@@ -56,7 +55,7 @@ public class MovieController {
     }
 
     @GetMapping("/top")
-    public ResponseEntity getTopRatedMovies() {
+    public ResponseEntity<List<TopMovies>> getTopRatedMovies() {
         return ResponseEntity.ok(service.getTopRatedMovies());
     }
 

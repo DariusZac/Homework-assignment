@@ -7,7 +7,6 @@ import lombok.Data;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
@@ -31,7 +30,7 @@ public class MovieDetail {
     private Movie movieId;
     @NotBlank
     private String description;
-    private int budget;
+    private Integer budget;
     @Column(name = "release_date")
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate date;

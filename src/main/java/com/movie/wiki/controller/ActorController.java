@@ -32,7 +32,7 @@ public class ActorController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity deleteActor(@PathVariable Long id) {
+    public ResponseEntity<Object> deleteActor(@PathVariable Long id) {
         service.deleteActor(id);
         return ResponseEntity.noContent().build();
     }

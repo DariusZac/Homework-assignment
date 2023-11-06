@@ -27,8 +27,8 @@ public class ActorServiceImpl implements ActorService {
 
     @Override
     public void deleteActor(Long id) {
-        if (!repository.existsById(id)){
-            throw new IdNotFound("No actor with id: "+id);
+        if (!repository.existsById(id)) {
+            throw new IdNotFound("No actor with id: " + id);
         }
         repository.deleteById(id);
         log.info("Actor with id {} is deleted", id);

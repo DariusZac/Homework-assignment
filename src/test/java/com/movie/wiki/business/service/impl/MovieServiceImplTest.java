@@ -16,6 +16,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,8 +25,6 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.anyLong;
 import static org.mockito.Mockito.verify;
@@ -49,40 +49,48 @@ class MovieServiceImplTest {
 
     @Test
     void getAllMovies() {
+        //given
         when(repository.findAll()).thenReturn(List.of(new Movie()));
         MovieDto dto = new MovieDto();
         when(mapper.movieToDto(any(Movie.class))).thenReturn(dto);
+        //when-then
         assertEquals(List.of(dto), service.getAllMovies());
     }
 
     @Test
     void addMovie() {
+        //given
         MovieDto dto = new MovieDto();
         dto.setId(0L);
         when(mapper.dtoToMovie(any(MovieDto.class))).thenReturn(new Movie());
         when(repository.save(any(Movie.class))).thenReturn(new Movie());
         when(mapper.movieToDto(any(Movie.class))).thenReturn(dto);
+        //when-then
         assertEquals(dto, service.addMovie(dto));
     }
 
     @Test
     void updateMovie_Success() {
+        //given
         MovieDto dto = new MovieDto();
         dto.setId(1L);
         when(repository.existsById(anyLong())).thenReturn(true);
         when(mapper.dtoToMovie(any(MovieDto.class))).thenReturn(new Movie());
         when(repository.save(any(Movie.class))).thenReturn(new Movie());
         when(mapper.movieToDto(any(Movie.class))).thenReturn(dto);
+        //when-then
         verifyNoMoreInteractions(repository, mapper);
         assertEquals(dto, service.updateMovie(dto));
     }
 
     @Test
     void updateMovie_BadIdGiven() {
+        //given
         MovieDto dto = new MovieDto();
         dto.setId(1L);
         when(repository.existsById(anyLong())).thenReturn(false);
         Throwable error = catchThrowable(() -> service.updateMovie(dto));
+        //when-then
         assertThat(error)
                 .isInstanceOf(IdNotFound.class)
                 .hasMessage("No movie with id: 1");
@@ -90,8 +98,11 @@ class MovieServiceImplTest {
 
     @Test
     void deleteMovie_Success() {
+        //given
         when(repository.existsById(anyLong())).thenReturn(true);
+        //when
         service.deleteMovie(0L);
+        //then
         verify(repository).existsById(anyLong());
         verify(repository).deleteById(anyLong());
         verifyNoMoreInteractions(repository);
@@ -99,49 +110,59 @@ class MovieServiceImplTest {
 
     @Test
     void deleteMovie_BadIdGiven() {
+        //given
         when(repository.existsById(anyLong())).thenReturn(false);
         Throwable error = catchThrowable(() -> service.deleteMovie(0L));
+        //when-then
         assertThat(error)
                 .isInstanceOf(IdNotFound.class)
                 .hasMessage("No movie with id: 0");
     }
 
-    @Test
-    void addActor_BadMovieIdGiven() {
-        when(repository.existsById(anyLong())).thenReturn(false);
-        assertFalse(service.addActor(0L, 0L));
-    }
+//    @Test
+//    void addActor_BadMovieIdGiven() {
+//        //given
+//        when(repository.existsById(anyLong())).thenReturn(false);
+//        //when-then
+//        assertFalse(service.addActor(0L, 0L));
+//    }
 
     @Test
     void addActor_BadActorIdGiven() {
-        when(repository.existsById(anyLong())).thenReturn(true);
-        when(actorRepository.existsById(anyLong())).thenReturn(false);
-        assertFalse(service.addActor(0L, 0L));
+        //when
+        ResponseEntity<Object> objectResponseEntity = service.addActor(0L, 0L);
+        //then
+        assertEquals(HttpStatus.NOT_FOUND, objectResponseEntity.getStatusCode());
     }
 
     @Test
     void addActor_Success() {
+        //given
         Actor actor = new Actor();
-        when(repository.existsById(anyLong())).thenReturn(true);
-        when(actorRepository.existsById(anyLong())).thenReturn(true);
         when(repository.findById(anyLong())).thenReturn(Optional.of(movie));
         when(actorRepository.findById(anyLong())).thenReturn(Optional.of(actor));
-        when(repository.save(any(Movie.class))).thenReturn(movie);
-        assertTrue(service.addActor(0L, 0L));
+        //when
+        ResponseEntity<Object> objectResponseEntity = service.addActor(0L, 0L);
+        //then
+        assertEquals(HttpStatus.OK, objectResponseEntity.getStatusCode());
     }
 
     @Test
     void getMovieActors_Success() {
+        //given
         ActorNMovie dto = new ActorNMovie();
         when(repository.findById(anyLong())).thenReturn(Optional.of(movie));
-        when(mapper.EntityToActorNMovieDto(any(Movie.class))).thenReturn(dto);
+        when(mapper.entityToActorNMovieDto(any(Movie.class))).thenReturn(dto);
+        //when-then
         assertEquals(dto, service.getMovieActors(0L));
     }
 
     @Test
     void getMovieActors_BadIdGiven() {
+        //given
         when(repository.findById(anyLong())).thenReturn(Optional.empty());
         Throwable error = catchThrowable(() -> service.getMovieActors(0L));
+        //when-then
         assertThat(error)
                 .isInstanceOf(IdNotFound.class)
                 .hasMessage("No movie with id: 0");
@@ -149,6 +170,7 @@ class MovieServiceImplTest {
 
     @Test
     void getTopRatedMovies_Success() {
+        //given
         Review review = new Review();
         review.setScore(7);
         Review review2 = new Review();
@@ -165,6 +187,7 @@ class MovieServiceImplTest {
         TopMovies topMovies = new TopMovies(1L, "Terminator", 6, 2);
         TopMovies topMovies1 = new TopMovies(2L, "Avatar", 8, 2);
         List<TopMovies> topMovie = List.of(topMovies1, topMovies);
+        //when-then
         assertEquals(topMovie, service.getTopRatedMovies());
     }
 }

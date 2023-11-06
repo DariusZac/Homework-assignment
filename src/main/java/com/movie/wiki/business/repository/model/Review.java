@@ -23,8 +23,8 @@ public class Review implements MovieScore {
     private Long id;
     @Column
     private String reviewer;
-    @Column
-    private String review;
+    @Column(name = "review")
+    private String movieReview;
     @Column
     private int score;
     @Column(name = "date_created")

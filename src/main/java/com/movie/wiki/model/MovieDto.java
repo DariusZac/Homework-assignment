@@ -1,7 +1,6 @@
 package com.movie.wiki.model;
 
 import lombok.Data;
-import org.springframework.lang.Nullable;
 
 import javax.validation.constraints.NotBlank;
 

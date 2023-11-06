@@ -24,7 +24,7 @@ public class MovieDetailController {
     }
 
     @PostMapping
-    public ResponseEntity addDetails(@Validated @RequestBody MovieDetailDto dto) {
+    public ResponseEntity<MovieDetailDto> addDetails(@Validated @RequestBody MovieDetailDto dto) {
         return ResponseEntity.ok(service.addDetails(dto));
     }
 

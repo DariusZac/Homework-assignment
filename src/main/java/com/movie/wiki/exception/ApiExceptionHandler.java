@@ -13,6 +13,6 @@ public class ApiExceptionHandler {
     @ExceptionHandler(value = IdNotFound.class)
     public ResponseEntity<ExceptionDto> handleException(IdNotFound e){
         ExceptionDto dto = new ExceptionDto(e.getMessage(), HttpStatus.NOT_FOUND, LocalDateTime.now());
-        return new ResponseEntity(dto, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(dto, HttpStatus.NOT_FOUND);
     }
 }
