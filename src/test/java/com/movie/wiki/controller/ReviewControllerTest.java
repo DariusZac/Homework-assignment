@@ -16,7 +16,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 import static org.mockito.Mockito.any;
@@ -42,9 +42,9 @@ class ReviewControllerTest {
         reviewDto.setId(1L);
         reviewDto.setScore(10);
         reviewDto.setReview("meh");
-        reviewDto.setDate(LocalDate.parse("2022-02-02"));
+        reviewDto.setDate(new Date());
         objectMapper.registerModule(new JavaTimeModule());
-        objectMapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd"));
+        objectMapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm"));
         stringObject = objectMapper.writeValueAsString(reviewDto);
     }
 

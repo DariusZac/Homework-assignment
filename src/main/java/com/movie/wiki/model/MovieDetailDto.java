@@ -8,6 +8,7 @@ import java.time.LocalDate;
 
 @Data
 public class MovieDetailDto {
+    @NotNull
     private Long id;
     @NotBlank
     private String description;

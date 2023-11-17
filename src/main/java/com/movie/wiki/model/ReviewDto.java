@@ -1,11 +1,12 @@
 package com.movie.wiki.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import org.springframework.lang.Nullable;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDate;
+import java.util.Date;
 
 @Data
 public class ReviewDto {
@@ -16,5 +17,6 @@ public class ReviewDto {
     @NotNull
     private int score;
     @Nullable
-    private LocalDate date;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
+    private Date date;
 }

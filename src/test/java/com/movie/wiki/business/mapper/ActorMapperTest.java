@@ -25,7 +25,7 @@ class ActorMapperTest {
         //when
         Actor mappedActor = mapper.dtoToEntity(actorDto);
         //then
-        assertNull(mappedActor.getDate());
+        assertNull(mappedActor.getDateOfBirth());
         assertNull(mappedActor.getNationality());
         assertEquals(actorDto.getId(), mappedActor.getId());
         assertEquals(actorDto.getFullName(), mappedActor.getFullName());
@@ -40,7 +40,7 @@ class ActorMapperTest {
         //when
         ActorDto mappedActor = mapper.entityToDto(actor);
         //then
-        assertNull(mappedActor.getDate());
+        assertNull(mappedActor.getDateOfBirth());
         assertNull(mappedActor.getNationality());
         assertEquals(actor.getId(), mappedActor.getId());
         assertEquals(actor.getFullName(), mappedActor.getFullName());

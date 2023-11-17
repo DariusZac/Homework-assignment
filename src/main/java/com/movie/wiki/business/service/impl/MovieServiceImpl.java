@@ -71,7 +71,9 @@ public class MovieServiceImpl implements MovieService {
         Optional<Movie> movie = repository.findById(movieId);
         Optional<Actor> actor = actorRepository.findById(actorId);
         if (movie.isPresent() && actor.isPresent()) {
-            repository.save(movie.get());
+            Movie existingMovie = movie.get();
+            existingMovie.addActor(actor.get());
+            repository.save(existingMovie);
             return ResponseEntity.ok().build();
         }
         return ResponseEntity.notFound().build();

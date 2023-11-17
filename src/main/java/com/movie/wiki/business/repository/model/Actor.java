@@ -30,7 +30,7 @@ public class Actor {
     private String nationality;
     @Column(name = "date_of_birth")
     @JsonFormat(pattern = "yyyy-MM-dd")
-    private LocalDate date;
+    private LocalDate dateOfBirth;
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.MERGE,
                                                    CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(name = "movie_actor",

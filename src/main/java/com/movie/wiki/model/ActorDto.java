@@ -11,5 +11,5 @@ public class ActorDto {
     @NotBlank
     private String fullName;
     private String nationality;
-    private LocalDate date;
+    private LocalDate dateOfBirth;
 }

@@ -34,10 +34,8 @@ public class Movie {
 
     @OneToOne(mappedBy = "movieId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonManagedReference
-//    @PrimaryKeyJoinColumn
     private MovieDetail detail;
 
-//    @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH,
                                 CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH} )
     @JoinTable(name = "movie_actor",

@@ -40,7 +40,7 @@ class ActorControllerTest {
         actorDto.setId(1L);
         actorDto.setFullName("Greg");
         actorDto.setNationality("test");
-        actorDto.setDate(LocalDate.parse("1980-09-09"));
+        actorDto.setDateOfBirth(LocalDate.parse("1980-09-09"));
         objectMapper.registerModule(new JavaTimeModule());
         objectMapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd"));
         stringObject = objectMapper.writeValueAsString(actorDto);

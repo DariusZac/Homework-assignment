@@ -12,7 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 @Data
@@ -29,7 +29,7 @@ public class Review implements MovieScore {
     private int score;
     @Column(name = "date_created")
     @CreationTimestamp
-    private LocalDateTime date;
+    private Date date;
     @ManyToOne
     @JoinColumn(name = "movie_id")
     private Movie movieId;

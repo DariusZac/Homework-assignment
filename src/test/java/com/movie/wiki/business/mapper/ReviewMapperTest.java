@@ -8,6 +8,7 @@ import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 @ExtendWith({MockitoExtension.class})
@@ -27,7 +28,7 @@ class ReviewMapperTest {
         Review mapped = mapper.dtoToEntity(reviewDto);
         //then
         assertNull(mapped.getReviewer());
-        assertNull(mapped.getDate());
+        assertNotNull(mapped.getDate());
         assertEquals(reviewDto.getId(), mapped.getId());
         assertEquals(reviewDto.getReview(), mapped.getMovieReview());
         assertEquals(reviewDto.getScore(), mapped.getScore());
